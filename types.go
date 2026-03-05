@@ -17,7 +17,6 @@
 package abm
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -79,27 +78,6 @@ const (
 // or an array of strings. The Apple Business Manager API inconsistently returns
 // fields like wifiMacAddress as either a string or an array depending on the device.
 type StringOrStrings []string
-
-// UnmarshalJSON implements [encoding/json.Unmarshaler] for standard library compatibility.
-func (s *StringOrStrings) UnmarshalJSON(data []byte) error {
-	// Try array first
-	var arr []string
-	if err := json.Unmarshal(data, &arr); err == nil {
-		*s = arr
-		return nil
-	}
-	// Try single string
-	var str string
-	if err := json.Unmarshal(data, &str); err == nil {
-		if str != "" {
-			*s = []string{str}
-		} else {
-			*s = nil
-		}
-		return nil
-	}
-	return fmt.Errorf("StringOrStrings: cannot unmarshal %s", string(data))
-}
 
 // UnmarshalJSONFrom implements [json.UnmarshalerFrom] for the go-json-experiment library.
 func (s *StringOrStrings) UnmarshalJSONFrom(dec *jsontext.Decoder) error {
