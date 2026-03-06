@@ -1,4 +1,4 @@
-module github.com/zchee/abm
+module github.com/CampusTech/abm
 
 go 1.26
 
@@ -10,4 +10,4 @@ require (
 	golang.org/x/oauth2 v0.35.0
 )
 
-require golang.org/x/time v0.14.0 // indirect
+require golang.org/x/time v0.14.0
